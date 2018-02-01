@@ -134,21 +134,21 @@ class Entity {
     /**
      * @return Model
      */
-    public function getModel() : Model {
+    public function getModel() {
         return $this->model;
     }
 
     /**
      * @return string
      */
-    public function getPrimaryKey() : string {
+    public function getPrimaryKey() {
         return $this->primaryKey;
     }
 
     /**
      * @return int
      */
-    public function getPrimaryValue() : int {
+    public function getPrimaryValue() {
         return $this->primaryValue;
     }
 
@@ -183,7 +183,7 @@ class Entity {
     /**
      * @return bool
      */
-    public function isAutoUpdate() : bool {
+    public function isAutoUpdate() {
         return $this->autoUpdate;
     }
 
