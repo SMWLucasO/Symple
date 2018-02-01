@@ -38,7 +38,7 @@ A model represents the table for any query you will be making, you can select th
 ```
 Using this, we have a bunch of methods we can use.
 
-####▶ byId
+###▶ byId
 Argument(s): 'id'
 
 Description: Selects a row from the database table, the id is from the primary key. This works if you use an id as primary key.
@@ -51,7 +51,7 @@ Usage:
 
 Returns: an Entity object linked to this 'id' or null.
 
-####▶ by
+###▶ by
 Argument(s): 'column', 'value'<br>
 Optional argument(s): 'filter'
 
@@ -65,7 +65,7 @@ Usage:
 
 Returns: array of 'Entity' object or Entity object depending on the amount of rows retrieved.
 
-####▶ all
+###▶ all
 Argument(s): None.
 
 Description: Select all the rows in the database table, put them into an array and return it.
@@ -77,7 +77,7 @@ Usage:
 ```
 
 Returns: array of 'Entity' object
-####▶ create
+###▶ create
 Argument(s): 'values', 'verification'
 Optional argument(s): 'filter'
 
@@ -100,7 +100,7 @@ Usage:
 The Entity object is the object representation of the row selected through the Model. We can use this to update, delete and read.
 To make this happen, we have an amount of functions, and a way to add your own functionalities through inheritance. But you'll need to link this through the configuration.
 
-####▶ Read
+###▶ Read
 Reading data from an entity is very simple, we use the name of the columns and use these as variables, as such.
 ```php
     // Get the table, and retrieve the row with the id '1'
@@ -113,7 +113,7 @@ Reading data from an entity is very simple, we use the name of the columns and u
 
 It is that simple.
 
-####▶ Update
+###▶ Update
 The 'Entity' object has a special functionality created for updating the row it represents. There's multiple ways to do so, too.
 
 Method 1: Enabling auto update.
@@ -149,7 +149,7 @@ Method 2: Using the update functionality
 
 These functionalities both have their own pros and cons, choose wisely!
 
-####▶ Delete
+###▶ Delete
 
 Deleting a row which is represented by the Entity object is very simple.
 ```php
