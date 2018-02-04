@@ -1,33 +1,67 @@
 <?php
-
 namespace Symple\mvc;
-
-
 class Route {
 
     /**
-     * @param $url
-     * @param $function
+     * Return data or execute an action using this method
+     *
+     * @param $url string
+     * @param $function \Closure
      * @return bool
      */
     public static function get($url, $function) {
-
         $URIComponents = explode("/", $_SERVER['REQUEST_URI']);
 
+        $URIComponents = self::filterRootPieces( $URIComponents );
+        $URIComponents = self::filter( $URIComponents );
+
+        $urlPieces = self::filter( explode( '/', $url ) );
+
+        if( self::load( $URIComponents, $urlPieces ) ) {
+            $paramArray = self::getFunctionArguments( $URIComponents, $urlPieces );
+            $function(...$paramArray);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Remove the URIComponents that are also contained within the root path
+     *
+     * @param $URIComponents array
+     * @return array
+     */
+    private static function filterRootPieces( $URIComponents ) {
         $config = require 'config/config.php';
-
-        $rootParts = explode('/', $config["ROOT_PATH"]);
-
+        $rootParts = explode( '/', $config["ROOT_PATH"] );
         foreach( (array) $rootParts as $key => $value) {
-            if(($key = array_search($value, $URIComponents)) !== false) {
-                unset($URIComponents[$key]);
+            if( ( $key = array_search( $value, $URIComponents ) ) !== false ) {
+                unset( $URIComponents[$key] );
             }
         }
 
-        $URIComponents = array_values( array_filter( $URIComponents ) );
-        $urlPieces = array_values( array_filter( explode( '/', $url ) ) );
+        return $URIComponents;
+    }
 
+    /**
+     * Remove empty array pieces and reset the count
+     *
+     * @param $array array
+     * @return array
+     */
+    private static function filter( $array ) {
+        return array_values( array_filter( $array ) );
+    }
 
+    /**
+     * Check if the route can be executed
+     *
+     * @param $URIComponents array
+     * @param $urlPieces array
+     * @return bool
+     */
+    private static function load( $URIComponents, $urlPieces ) {
         if( sizeof( $URIComponents ) !== sizeof( $urlPieces ) ) {
             return false;
         } else {
@@ -44,6 +78,17 @@ class Route {
             }
         }
 
+        return true;
+    }
+
+    /**
+     * Get the arguments to initialize the function of the route
+     *
+     * @param $URIComponents array
+     * @param $urlPieces array
+     * @return array
+     */
+    private static function getFunctionArguments( $URIComponents, $urlPieces ) {
         $paramArray = array();
         foreach( (array) $urlPieces as $key => $value ) {
             if( substr( $value, 0, 1 ) === '{' ) {
@@ -53,10 +98,7 @@ class Route {
             }
         }
 
-        $function(...$paramArray);
-
-
-        return true;
+        return $paramArray;
     }
 
 }
