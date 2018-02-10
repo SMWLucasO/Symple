@@ -6,10 +6,10 @@ class Route
 {
 
     /**
-     * Return data or execute an action using this method
+     * Return GET data or execute an action using this method
      *
      * @param $url string
-     * @param $function \Closure
+     * @param $function \Callable
      * @return bool
      */
     public static function get($url, $function)
@@ -31,6 +31,17 @@ class Route
     }
 
     /**
+     * Return POST data or execute an action using this method
+     * @param $function \Callable
+     */
+    public static function post($function)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $function($_POST);
+        }
+    }
+
+    /**
      * Remove the URIComponents that are also contained within the root path
      *
      * @param $URIComponents array
@@ -38,7 +49,7 @@ class Route
      */
     private static function filterRootPieces($URIComponents)
     {
-        $config = require 'config/config.php';
+        $config = require __DIR__ . '/../config/config.php';
         $rootParts = explode('/', $config["ROOT_PATH"]);
         foreach ((array)$rootParts as $key => $value) {
             if (($key = array_search($value, $URIComponents)) !== false) {
