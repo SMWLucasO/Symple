@@ -6,7 +6,8 @@ namespace Symple\database;
  * @author Lucas Ouwens
  * @version 0.1
  */
-class SafePDO extends \PDO {
+class SafePDO extends \PDO
+{
 
 
     /**
@@ -18,13 +19,14 @@ class SafePDO extends \PDO {
      * @param $username string  Database connection username
      * @param $passwd string    Database connection password
      * @param $options array    An array of PDO parameters
-    */
-    public function __construct( $dsn, $username, $passwd, $options ) {
+     */
+    public function __construct($dsn, $username, $passwd, $options)
+    {
 
         // Callback on errors, will execute the handleException method with Exception object
         //set_exception_handler( array( $this, 'handleException' ) );
 
-        parent::__construct( $dsn, $username, $passwd, $options );
+        parent::__construct($dsn, $username, $passwd, $options);
 
     }
 
@@ -34,14 +36,15 @@ class SafePDO extends \PDO {
      *
      * @param $exception \Exception     The exception we have received.
      */
-    public function handleException( $exception ) {
+    public function handleException($exception)
+    {
         $data = require __dir__ . '/../config/config.php';
 
         $newMessage = $exception->getMessage();
-        foreach( $data as $key => $value ) {
-            if( ! empty( $value ) ) {
-                if( strpos( $newMessage, $value ) !== FALSE ) {
-                        $newMessage = str_replace( $value, "...", $newMessage );
+        foreach ($data as $key => $value) {
+            if (!empty($value)) {
+                if (strpos($newMessage, $value) !== false) {
+                    $newMessage = str_replace($value, "...", $newMessage);
                 }
             }
         }

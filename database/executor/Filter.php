@@ -6,7 +6,8 @@ namespace Symple\database\executor;
  * @author Lucas Ouwens
  * @version 0.1
  */
-class Filter {
+class Filter
+{
 
     const NONE = 0;
     const NO_HTML_ALLOWED = 1;

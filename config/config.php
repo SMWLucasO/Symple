@@ -1,4 +1,4 @@
- <?php
+<?php
 
 /**
  * All the important data is to be stored here, the config folder needs to be PRIVATE
@@ -10,5 +10,8 @@ return [
     "dbuser" => "root",
     "dbpass" => "",
     "PDO_ERROR_MODE" => \PDO::ERRMODE_EXCEPTION,
-    "defined_entities" => []
+    "defined_entities" => [],
+    "ROOT_PATH" => "http://localhost/Symple/"
 ];
+
+

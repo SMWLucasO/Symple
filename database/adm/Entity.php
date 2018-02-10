@@ -9,7 +9,8 @@ use Symple\database\executor\PDOExecutor;
  * @author Lucas Ouwens
  * @version 1.0 (Alpha, non-optimized)
  */
-class Entity {
+class Entity
+{
 
     /**
      *
@@ -55,15 +56,16 @@ class Entity {
      * @param $data array           An associative array of [column] => [value] to fill the fields with
      * @throws \Exception           gets thrown if the Entity cannot be initialized or the specified model isn't an instance of the Model class
      */
-    public function __construct( $model, $data ) {
-        if( $model instanceof Model ) {
+    public function __construct($model, $data)
+    {
+        if ($model instanceof Model) {
             $this->model = $model;
             $this->fields = $data;
-            if( ! ( $this->_init() ) ) {
-                throw new \Exception( "Unable to initialize entity, make sure the primary key and value aren't empty." );
+            if (!($this->_init())) {
+                throw new \Exception("Unable to initialize entity, make sure the primary key and value aren't empty.");
             }
         } else {
-            throw new \Exception( "Invalid object type given for model, this needs to be a 'Model' object." );
+            throw new \Exception("Invalid object type given for model, this needs to be a 'Model' object.");
         }
     }
 
@@ -71,9 +73,10 @@ class Entity {
      * Initialize the Entity(or child) by setting the primary key and primary value.
      * @return bool         Returns true if initialized, otherwise false.
      */
-    protected function _init() {
-        if(  ! ( empty( $this->getModel()->getPrimaryKey() ) ) ) {
-            if( ! ( empty( $this->fields[$this->getModel()->getPrimaryKey()] ) ) ) {
+    protected function _init()
+    {
+        if (!(empty($this->getModel()->getPrimaryKey()))) {
+            if (!(empty($this->fields[$this->getModel()->getPrimaryKey()]))) {
                 $this->primaryKey = $this->getModel()->getPrimaryKey();
                 $this->primaryValue = $this->fields[$this->primaryKey];
                 return true;
@@ -91,16 +94,17 @@ class Entity {
      * @param $filter int           A Filter constant to specify if there should be an extra action or not
      * @return bool                 Returns true if the row was successfully updated, otherwise false
      */
-    public function update( $assoc, $verify, $filter = Filter::NONE ) {
+    public function update($assoc, $verify, $filter = Filter::NONE)
+    {
         $setString = "";
 
-        foreach( (array) $assoc as $key => $value ) {
-            if( in_array( $key, array_keys( $this->getModel()->getTypes() ) ) ) {
+        foreach ((array)$assoc as $key => $value) {
+            if (in_array($key, array_keys($this->getModel()->getTypes()))) {
                 $setString .= $key . "= :" . $key . ",";
             }
         }
 
-        $setString = rtrim( $setString, ',' );
+        $setString = rtrim($setString, ',');
 
         $assoc["p_key"] = $this->getPrimaryValue();
         $verify["p_key"] = "int";
@@ -118,7 +122,8 @@ class Entity {
      * Delete the object specified to this row
      * @return bool             Returns true if deleted, otherwise false.
      */
-    public function delete() {
+    public function delete()
+    {
         return PDOExecutor::execute(
             Filter::NONE,
             "DELETE FROM " . $this->getModel()->getTable() . " WHERE " . $this->getPrimaryKey() . " = :p_key",
@@ -134,21 +139,24 @@ class Entity {
     /**
      * @return Model
      */
-    public function getModel() {
+    public function getModel()
+    {
         return $this->model;
     }
 
     /**
      * @return string
      */
-    public function getPrimaryKey() {
+    public function getPrimaryKey()
+    {
         return $this->primaryKey;
     }
 
     /**
      * @return int
      */
-    public function getPrimaryValue() {
+    public function getPrimaryValue()
+    {
         return $this->primaryValue;
     }
 
@@ -157,8 +165,9 @@ class Entity {
      * @param $name string          The variable name
      * @return mixed|null           Returns the value of the variable or null if it does not exist.
      */
-    public function __get( $name ) {
-        if( isset( $this->fields[$name] ) ) {
+    public function __get($name)
+    {
+        if (isset($this->fields[$name])) {
             return $this->fields[$name];
         }
 
@@ -171,11 +180,12 @@ class Entity {
      * @param $name string          The variable name stored in the fields array
      * @param $value mixed          The new value to be stored in the fields array under the specified 'name' key
      */
-    public function __set( $name, $value ) {
-        if( isset( $this->fields[$name] ) ) {
+    public function __set($name, $value)
+    {
+        if (isset($this->fields[$name])) {
             $this->fields[$name] = $value;
-            if( $this->isAutoUpdate() ) {
-                $this->update( [$name => $value], [$name => "ignore"] );
+            if ($this->isAutoUpdate()) {
+                $this->update([$name => $value], [$name => "ignore"]);
             }
         }
     }
@@ -183,7 +193,8 @@ class Entity {
     /**
      * @return bool
      */
-    public function isAutoUpdate() {
+    public function isAutoUpdate()
+    {
         return $this->autoUpdate;
     }
 
@@ -191,7 +202,8 @@ class Entity {
      * When set to true, updates the set values in the row itself too.
      * @param $autoUpdate bool
      */
-    public function setAutoUpdate( $autoUpdate ) {
+    public function setAutoUpdate($autoUpdate)
+    {
         $this->autoUpdate = $autoUpdate;
     }
 
