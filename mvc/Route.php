@@ -1,6 +1,9 @@
 <?php
+
 namespace Symple\mvc;
-class Route {
+
+class Route
+{
 
     /**
      * Return data or execute an action using this method
@@ -9,16 +12,17 @@ class Route {
      * @param $function \Closure
      * @return bool
      */
-    public static function get($url, $function) {
+    public static function get($url, $function)
+    {
         $URIComponents = explode("/", $_SERVER['REQUEST_URI']);
 
-        $URIComponents = self::filterRootPieces( $URIComponents );
-        $URIComponents = self::filter( $URIComponents );
+        $URIComponents = self::filterRootPieces($URIComponents);
+        $URIComponents = self::filter($URIComponents);
 
-        $urlPieces = self::filter( explode( '/', $url ) );
+        $urlPieces = self::filter(explode('/', $url));
 
-        if( self::load( $URIComponents, $urlPieces ) ) {
-            $paramArray = self::getFunctionArguments( $URIComponents, $urlPieces );
+        if (self::load($URIComponents, $urlPieces)) {
+            $paramArray = self::getFunctionArguments($URIComponents, $urlPieces);
             $function(...$paramArray);
             return true;
         }
@@ -32,12 +36,13 @@ class Route {
      * @param $URIComponents array
      * @return array
      */
-    private static function filterRootPieces( $URIComponents ) {
+    private static function filterRootPieces($URIComponents)
+    {
         $config = require 'config/config.php';
-        $rootParts = explode( '/', $config["ROOT_PATH"] );
-        foreach( (array) $rootParts as $key => $value) {
-            if( ( $key = array_search( $value, $URIComponents ) ) !== false ) {
-                unset( $URIComponents[$key] );
+        $rootParts = explode('/', $config["ROOT_PATH"]);
+        foreach ((array)$rootParts as $key => $value) {
+            if (($key = array_search($value, $URIComponents)) !== false) {
+                unset($URIComponents[$key]);
             }
         }
 
@@ -50,8 +55,9 @@ class Route {
      * @param $array array
      * @return array
      */
-    private static function filter( $array ) {
-        return array_values( array_filter( $array ) );
+    private static function filter($array)
+    {
+        return array_values(array_filter($array));
     }
 
     /**
@@ -61,17 +67,21 @@ class Route {
      * @param $urlPieces array
      * @return bool
      */
-    private static function load( $URIComponents, $urlPieces ) {
-        if( sizeof( $URIComponents ) !== sizeof( $urlPieces ) ) {
+    private static function load($URIComponents, $urlPieces)
+    {
+        if (sizeof($URIComponents) !== sizeof($urlPieces)) {
             return false;
         } else {
-            foreach( (array) $urlPieces as $key => $value ) {
-                if( ! ( $value === $URIComponents[$key] ) && ! ( substr( $value, 0, 1 ) === '{' && substr( $value, strlen( $value ) - 1, strlen( $value ) ) ) ) {
+            foreach ((array)$urlPieces as $key => $value) {
+                if (!($value === $URIComponents[$key]) && !(substr($value, 0, 1) === '{' && substr($value,
+                            strlen($value) - 1, strlen($value)))) {
                     return false;
-                } else if( substr( $value, 0, 1 ) === '{' && substr( $value, strlen( $value ) - 1, strlen( $value ) ) ) {
-                    if( substr( $value, 0, 1 ) === '{' && substr( $value, strlen( $value ) - 1, strlen( $value ) ) ) {
-                        if( ! ( isset( $URIComponents[$key] ) ) ) {
-                            return false;
+                } else {
+                    if (substr($value, 0, 1) === '{' && substr($value, strlen($value) - 1, strlen($value))) {
+                        if (substr($value, 0, 1) === '{' && substr($value, strlen($value) - 1, strlen($value))) {
+                            if (!(isset($URIComponents[$key]))) {
+                                return false;
+                            }
                         }
                     }
                 }
@@ -88,11 +98,12 @@ class Route {
      * @param $urlPieces array
      * @return array
      */
-    private static function getFunctionArguments( $URIComponents, $urlPieces ) {
+    private static function getFunctionArguments($URIComponents, $urlPieces)
+    {
         $paramArray = array();
-        foreach( (array) $urlPieces as $key => $value ) {
-            if( substr( $value, 0, 1 ) === '{' ) {
-                if( substr( $value, strlen( $value ) - 1, strlen( $value ) ) ) {
+        foreach ((array)$urlPieces as $key => $value) {
+            if (substr($value, 0, 1) === '{') {
+                if (substr($value, strlen($value) - 1, strlen($value))) {
                     $paramArray[] = $URIComponents[$key];
                 }
             }
