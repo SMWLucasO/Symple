@@ -14,6 +14,12 @@ class Module
     private $contents, $snippets = array();
     private $bindings = array();
 
+    /**
+     * Module constructor.
+     * @param string $moduleLink
+     * @param array $moduleBindings
+     * @param string $contents
+     */
     public function __construct($moduleLink, $moduleBindings = array(), $contents = "")
     {
         $this->link = $moduleLink;
@@ -22,6 +28,9 @@ class Module
     }
 
 
+    /**
+     * @param array ...$script
+     */
     public function attachScripts(...$script)
     {
         foreach ((array)$script as $src) {
@@ -29,6 +38,13 @@ class Module
         }
     }
 
+    /**
+     * Attach a snippet to the module
+     *
+     * @param $placeholder
+     * @param $snippetLink
+     * @param $bindings
+     */
     public function attachSnippet($placeholder, $snippetLink, $bindings)
     {
         $snippet = new Snippet();
@@ -37,6 +53,12 @@ class Module
         $this->snippets[$placeholder] = $snippet->bindValues($bindings);
     }
 
+
+    /**
+     * Build and show the module front/back-end
+     *
+     * @return mixed|string
+     */
     public function build()
     {
 
