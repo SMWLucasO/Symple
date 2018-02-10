@@ -11,7 +11,7 @@ return [
     "dbpass" => "",
     "PDO_ERROR_MODE" => \PDO::ERRMODE_EXCEPTION,
     "defined_entities" => [],
-    "ROOT_PATH" => "http://localhost/symple/",
+    "ROOT_PATH" => "http://localhost/Symple/",
     "MODULE_PATH" => "modules/"
 ];
 

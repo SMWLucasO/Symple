@@ -15,7 +15,6 @@ class Route
     public static function get($url, $function)
     {
         $URIComponents = explode("/", $_SERVER['REQUEST_URI']);
-
         $URIComponents = self::filterRootPieces($URIComponents);
         $URIComponents = self::filter($URIComponents);
 
