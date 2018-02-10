@@ -19,7 +19,7 @@ require_once "Symple/autoloader.php";
 ```
 This is necessary for usage of any object which we use.
 
-##Abstract Database Model
+## Abstract Database Model
 The Abstract database model is built up using 4 useful, but necessary<br>
 classes, they form the foundation of Symple.
 * Model
