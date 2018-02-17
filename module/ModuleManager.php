@@ -5,6 +5,13 @@ namespace Symple\module;
 class ModuleManager
 {
 
+    /**
+     * Load a module
+     *
+     * @param $moduleLink
+     * @param array $moduleBindings
+     * @return null|Module
+     */
     public static function load($moduleLink, $moduleBindings = array())
     {
         $config = require __DIR__ . '/../config/config.php';
