@@ -15,7 +15,7 @@ That is all, the framework was written in raw PHP!
 Before doing anything at all, you should require the autoloader.
 <br>This file can be found at the root of the project.
 ```php
-require_once "Symple/autoloader.php";
+require_once 'Symple/autoloader.php';
 ```
 This is necessary for usage of any object which we use.
 
@@ -34,7 +34,7 @@ There will be an explanation of each, and some examples.
 ### Model
 A model represents the table for any query you will be making, you can select the table for this model by using the following
 ```php
-    $model = Symple\database\adm\Model::get("TABLENAME");
+    $model = Symple\database\adm\Model::get('TABLENAME');
 ```
 Using this, we have a bunch of methods we can use.
 
@@ -45,7 +45,7 @@ Description: Selects a row from the database table, the id is from the primary k
 
 Usage:
 ```php
-    $model = Symple\database\adm\Model::get("TABLENAME");
+    $model = Symple\database\adm\Model::get('TABLENAME');
     $entity = $model->byId(5);
 ```
 
@@ -59,7 +59,7 @@ Description: Select one or multiple rows from the database table, where the spec
 
 Usage:
 ```php
-    $model = Symple\database\adm\Model::get("TABLENAME");
+    $model = Symple\database\adm\Model::get('TABLENAME');
     $entity = $model->by('column', 'value');
 ```
 
@@ -72,7 +72,7 @@ Description: Select all the rows in the database table, put them into an array a
 
 Usage:
 ```php
-    $model = Symple\database\adm\Model::get("TABLENAME");
+    $model = Symple\database\adm\Model::get('TABLENAME');
     $entity = $model->by('column', 'value');
 ```
 
@@ -85,15 +85,15 @@ Description: Insert a new row into the model's related table, takes 2 associativ
 
 Usage:
 ```php
-    $model = Symple\database\adm\Model::get("TABLENAME");
+    $model = Symple\database\adm\Model::get('TABLENAME');
     $entity = $model->create(
         array(
-            "COLUMN_1" => "nVar",
-            "COLUMN_2" => "anotherVar"
+            'COLUMN_1' => 'nVar',
+            'COLUMN_2' => 'anotherVar'
         ),
         array(
-            "COLUMN_1" => "string",
-            "COLUMN_2" => "string"
+            'COLUMN_1' => 'string',
+            'COLUMN_2' => 'string'
         )
 ```
 ### Entity
@@ -104,7 +104,7 @@ To make this happen, we have an amount of functions, and a way to add your own f
 Reading data from an entity is very simple, we use the name of the columns and use these as variables, as such.
 ```php
     // Get the table, and retrieve the row with the id '1'
-    $entity = Symple\database\adm\Model::get("TABLENAME")->byId(1);
+    $entity = Symple\database\adm\Model::get('TABLENAME')->byId(1);
     
     // in this case, the column names are 'description' and 'name'
     echo $entity->description;
@@ -120,12 +120,12 @@ Method 1: Enabling auto update.
 ```php
 
     // Get an entity from the specified table with an id of '1'
-    $entity = Symple\database\adm\Model::get("TABLENAME")->byId(1);
+    $entity = Symple\database\adm\Model::get('TABLENAME')->byId(1);
     
     $entity->setAutoUpdate(true); // Now you can update the variables from the database AND the object itself at once.
     
     // 'description' column of the row gets updated to new description
-    $entity->description = "new description";
+    $entity->description = 'new description';
 
 ```
 [warning]: Do not forget to disable auto update once you're done updating. It could have disastrous after effects (accidents happen!)
@@ -133,15 +133,15 @@ Method 1: Enabling auto update.
 Method 2: Using the update functionality
 ```php
     // Get an entity from the specified table with an id of '1'
-    $entity = Symple\database\adm\Model::get("TABLENAME")->byId(1);
+    $entity = Symple\database\adm\Model::get('TABLENAME')->byId(1);
     
     // now that we have the entity, we can update columns as such
     $entity->update(
         array(
-            "description" => "New description"
+            'description' => 'New description'
         ),
         array(
-            "description" => "string"
+            'description' => 'string'
         ) // possible to do an optional filter after this argument, see filter class.
     );
     
@@ -155,7 +155,7 @@ Deleting a row which is represented by the Entity object is very simple.
 ```php
 
     // Get an entity from the specified table with an id of '1'
-    $entity = Symple\database\adm\Model::get("TABLENAME")->byId(1);
+    $entity = Symple\database\adm\Model::get('TABLENAME')->byId(1);
     
     // delete the row related to the entity.
     $entity->delete();
@@ -189,9 +189,9 @@ You can register it by adding a new associative key => value pair to the array a
 ```php
 
     // works with namespaces too, of course!
-    "defined_entities" => [
-        "database_table" => myClass::class
-        "database_table_2" a\namespace\myClass::class
+    'defined_entities' => [
+        'database_table' => myClass::class
+        'database_table_2' a\namespace\myClass::class
     ]
     
 ```

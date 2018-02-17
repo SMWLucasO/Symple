@@ -37,13 +37,13 @@ class DatabaseConnection
 
         if (is_null($this->connection)) {
             $options = [
-                \PDO::ATTR_ERRMODE => $data["PDO_ERROR_MODE"],
+                \PDO::ATTR_ERRMODE => $data['PDO_ERROR_MODE'],
                 \PDO::MYSQL_ATTR_FOUND_ROWS => true,
                 \PDO::ATTR_EMULATE_PREPARES => false
             ];
 
-            $this->connection = new SafePDO("mysql:host=" . $data["host"] . ";dbname=" . $data["dbname"] . ";charset=utf8",
-                $data["dbuser"], $data["dbpass"], $options);
+            $this->connection = new SafePDO('mysql:host=' . $data['host'] . ';dbname=' . $data['dbname'] . ';charset=utf8',
+                $data['dbuser'], $data['dbpass'], $options);
         }
 
         return $this->connection;

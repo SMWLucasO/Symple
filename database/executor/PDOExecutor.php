@@ -32,22 +32,22 @@ class PDOExecutor
         # Type verification for now
         foreach ($typeVerification as $key => $value) {
             $value = strtolower($value);
-            if ($value === "int" || $value === "float" || $value === "double") {
+            if ($value === 'int' || $value === 'float' || $value === 'double') {
                 if (!is_numeric($bindings[$key])) {
                     return false;
                 }
             } else {
-                if ($value === "string") {
+                if ($value === 'string') {
                     if (!is_string($bindings[$key])) {
                         return false;
                     }
                 } else {
-                    if ($value === "bool") {
+                    if ($value === 'bool') {
                         if (!is_bool($bindings[$key])) {
                             return false;
                         }
                     } else {
-                        if ($value !== "ignore") {
+                        if ($value !== 'ignore') {
                             return false;
                         }
                     }
@@ -65,7 +65,7 @@ class PDOExecutor
         } else {
             if ($filter === Filter::CONVERT_HTML_CHARACTERS) {
                 foreach ($bindings as $key => $value) {
-                    $bindings[$key] = htmlspecialchars($value, ENT_QUOTES, "UTF-8");
+                    $bindings[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
                 }
             }
         }
@@ -76,8 +76,8 @@ class PDOExecutor
 
         if ($statement->execute()) {
 
-            $type = strtolower(explode(" ", $query)[0]);
-            if ($type === "select") {
+            $type = strtolower(explode(' ', $query)[0]);
+            if ($type === 'select') {
                 $data = ($fetchAll ? $statement->fetchAll() : $statement->fetch());
                 if (!empty($data)) {
                     return $data;
