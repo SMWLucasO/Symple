@@ -29,6 +29,8 @@ class Module
 
 
     /**
+     * Prepare scripts to be required upon building the module.
+     *
      * @param array ...$script
      */
     public function attachScripts(...$script)
@@ -41,9 +43,9 @@ class Module
     /**
      * Attach a snippet to the module
      *
-     * @param $placeholder
-     * @param $snippetLink
-     * @param $bindings
+     * @param string $placeholder
+     * @param string $snippetLink
+     * @param array $bindings
      */
     public function attachSnippet($placeholder, $snippetLink, $bindings)
     {
@@ -71,9 +73,6 @@ class Module
             $this->contents = str_replace('[' . $key . ']', $binding, $this->contents);
         }
 
-        /**
-         * @var $snippet Snippet
-         */
         foreach ((array)$this->snippets as $key => $contents) {
             $this->contents = str_replace('[' . $key . ']', $contents, $this->contents);
         }

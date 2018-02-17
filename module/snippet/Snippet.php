@@ -18,8 +18,8 @@ class Snippet
     public function bindContents($snippet)
     {
         $config = require __DIR__ . '/../../config/config.php';
-        if (is_file($config["MODULE_PATH"] . "snippets/" . $snippet . ".html")) {
-            $this->contents .= file_get_contents($config["MODULE_PATH"] . "snippets/" . $snippet . ".html");
+        if (is_file($config['MODULE_PATH'] . 'snippets/' . $snippet . '.html')) {
+            $this->contents .= file_get_contents($config['MODULE_PATH'] . 'snippets/' . $snippet . '.html');
         }
 
         return $this;
