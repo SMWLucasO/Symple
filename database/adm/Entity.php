@@ -96,22 +96,22 @@ class Entity
      */
     public function update($assoc, $verify, $filter = Filter::NONE)
     {
-        $setString = "";
+        $setString = '';
 
         foreach ((array)$assoc as $key => $value) {
             if (in_array($key, array_keys($this->getModel()->getTypes()))) {
-                $setString .= $key . "= :" . $key . ",";
+                $setString .= $key . '= :' . $key . ',';
             }
         }
 
         $setString = rtrim($setString, ',');
 
-        $assoc["p_key"] = $this->getPrimaryValue();
-        $verify["p_key"] = "int";
+        $assoc['p_key'] = $this->getPrimaryValue();
+        $verify['p_key'] = 'int';
 
         return PDOExecutor::execute(
             $filter,
-            "UPDATE " . $this->getModel()->getTable() . " SET " . $setString . " WHERE " . $this->getPrimaryKey() . " = :p_key",
+            'UPDATE ' . $this->getModel()->getTable() . ' SET ' . $setString . ' WHERE ' . $this->getPrimaryKey() . ' = :p_key',
             $assoc,
             $verify
         );
@@ -126,12 +126,12 @@ class Entity
     {
         return PDOExecutor::execute(
             Filter::NONE,
-            "DELETE FROM " . $this->getModel()->getTable() . " WHERE " . $this->getPrimaryKey() . " = :p_key",
+            'DELETE FROM ' . $this->getModel()->getTable() . ' WHERE ' . $this->getPrimaryKey() . ' = :p_key',
             array(
-                "p_key" => $this->getPrimaryValue()
+                'p_key' => $this->getPrimaryValue()
             ),
             array(
-                "p_key" => "int"
+                'p_key' => 'int'
             )
         );
     }
@@ -185,7 +185,7 @@ class Entity
         if (isset($this->fields[$name])) {
             $this->fields[$name] = $value;
             if ($this->isAutoUpdate()) {
-                $this->update([$name => $value], [$name => "ignore"]);
+                $this->update([$name => $value], [$name => 'ignore']);
             }
         }
     }

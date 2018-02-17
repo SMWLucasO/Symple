@@ -44,7 +44,7 @@ class SafePDO extends \PDO
         foreach ($data as $key => $value) {
             if (!empty($value)) {
                 if (strpos($newMessage, $value) !== false) {
-                    $newMessage = str_replace($value, "...", $newMessage);
+                    $newMessage = str_replace($value, '...', $newMessage);
                 }
             }
         }

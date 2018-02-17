@@ -20,7 +20,8 @@ class Module
      * @param array $moduleBindings
      * @param string $contents
      */
-    public function __construct($moduleLink, $moduleBindings = array(), $contents = "")
+    public function __construct($moduleLink, $moduleBindings = array(), $contents = '')
+
     {
         $this->link = $moduleLink;
         $this->bindings = $moduleBindings;
