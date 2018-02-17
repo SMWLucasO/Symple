@@ -14,7 +14,7 @@ class Route
      */
     public static function get($url, $function)
     {
-        $URIComponents = explode("/", $_SERVER['REQUEST_URI']);
+        $URIComponents = explode('/', $_SERVER['REQUEST_URI']);
 
         $URIComponents = self::filterRootPieces($URIComponents);
         $URIComponents = self::filter($URIComponents);
@@ -50,7 +50,7 @@ class Route
     private static function filterRootPieces($URIComponents)
     {
         $config = require __DIR__ . '/../config/config.php';
-        $rootParts = explode('/', $config["ROOT_PATH"]);
+        $rootParts = explode('/', $config['ROOT_PATH']);
         foreach ((array)$rootParts as $key => $value) {
             if (($key = array_search($value, $URIComponents)) !== false) {
                 unset($URIComponents[$key]);

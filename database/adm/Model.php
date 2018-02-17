@@ -62,14 +62,14 @@ class Model {
 
         $columns = PDOExecutor::execute(
             Filter::NONE,
-            "SELECT COLUMN_NAME, DATA_TYPE, COLUMN_KEY FROM information_schema.columns WHERE table_schema = :dbname AND TABLE_NAME = :tablename",
+            'SELECT COLUMN_NAME, DATA_TYPE, COLUMN_KEY FROM information_schema.columns WHERE table_schema = :dbname AND TABLE_NAME = :tablename',
             array(
-                "dbname" => $config["dbname"],
-                "tablename" => $table
+                'dbname' => $config['dbname'],
+                'tablename' => $table
             ),
             array(
-                "dbname" => "string",
-                "tablename" => "string"
+                'dbname' => 'string',
+                'tablename' => 'string'
             )
         );
 
@@ -77,13 +77,13 @@ class Model {
             if( $fetchTypes ) {
                 $array = array();
                 foreach( $columns as $column ) {
-                    $array[$column["COLUMN_NAME"]] = $column["DATA_TYPE"];
+                    $array[$column['COLUMN_NAME']] = $column['DATA_TYPE'];
                 }
                 return $array;
             } else {
                 foreach( (array) $columns as $column ) {
-                    if( $column["COLUMN_KEY"] === 'PRI' ) {
-                        return $column["COLUMN_NAME"];
+                    if( $column['COLUMN_KEY'] === 'PRI' ) {
+                        return $column['COLUMN_NAME'];
                     }
                 }
             }
@@ -113,12 +113,12 @@ class Model {
             if( ! ( empty( $this->primaryKey ) && empty( $this->types ) && empty( $this->table ) ) ) {
                 $data = PDOExecutor::execute(
                     $filter,
-                    "SELECT * FROM " . $this->table . " WHERE " . $this->primaryKey . " = :p_key",
+                    'SELECT * FROM ' . $this->table . ' WHERE ' . $this->primaryKey . ' = :p_key',
                     array(
-                        "p_key" => $id
+                        'p_key' => $id
                     ),
                     array(
-                        "p_key" => "int"
+                        'p_key' => 'int'
                     ),
                     false
                 );
@@ -141,8 +141,8 @@ class Model {
     private function getRegisteredEntity( $data ) {
         $config = require __DIR__ . '/../../config/config.php';
 
-        if( in_array( $this->table, array_keys( $config["defined_entities"] ) ) ) {
-            $obj = new $config["defined_entities"][$this->table]( $this, $data ); # No idea if this works lmao
+        if( in_array( $this->table, array_keys( $config['defined_entities'] ) ) ) {
+            $obj = new $config['defined_entities'][$this->table]( $this, $data ); # No idea if this works lmao
             if( is_object( $obj ) ) {
                 return $obj;
             }
@@ -162,12 +162,12 @@ class Model {
             if( ! ( empty( $this->primaryKey ) && empty( $this->table ) ) ) {
                 $data = PDOExecutor::execute(
                     Filter::NONE,
-                    "SELECT * FROM " . $this->table . " WHERE " . $column . " = :col",
+                    'SELECT * FROM ' . $this->table . ' WHERE ' . $column . ' = :col',
                     array(
-                        "col" => $value
+                        'col' => $value
                     ),
                     array(
-                        "col" => "ignore"
+                        'col' => 'ignore'
                     ),
                     true
                 );
@@ -195,7 +195,7 @@ class Model {
         if( ! ( empty( $this->primaryKey ) && empty( $this->table ) ) ) {
             $data = PDOExecutor::execute(
                 Filter::NONE,
-                "SELECT * FROM " . $this->table
+                'SELECT * FROM ' . $this->table
             );
             if( is_array( $data ) && ! ( empty( $data ) ) ) {
                 $entities = array();
@@ -222,7 +222,7 @@ class Model {
     public function create( $assoc, $verify, $filter = Filter::NONE ) {
         return PDOExecutor::execute(
             $filter,
-            "INSERT INTO " . $this->table . "(" . (implode( ',', array_keys( $assoc ) )) . ") VALUES (:" . (implode( ', :', array_keys( $assoc ) ) ) . ")",
+            'INSERT INTO ' . $this->table . '(' . (implode( ',', array_keys( $assoc ) )) . ') VALUES (:' . (implode( ', :', array_keys( $assoc ) ) ) . ')',
             $assoc,
             $verify
         );
@@ -237,7 +237,7 @@ class Model {
         if( ! ( empty( $this->primaryKey ) && empty( $this->table ) ) ) {
             $data = PDOExecutor::execute(
                 Filter::NONE,
-                "SELECT * FROM " . $this->table . " ORDER BY " . $this->getPrimaryKey() . " DESC LIMIT 1",
+                'SELECT * FROM ' . $this->table . ' ORDER BY ' . $this->getPrimaryKey() . ' DESC LIMIT 1',
                 false
             );
 

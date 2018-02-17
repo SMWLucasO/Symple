@@ -14,7 +14,7 @@ class Module
     private $contents, $snippets = array();
     private $bindings = array();
 
-    public function __construct($moduleLink, $moduleBindings = array(), $contents = "")
+    public function __construct($moduleLink, $moduleBindings = array(), $contents = '')
     {
         $this->link = $moduleLink;
         $this->bindings = $moduleBindings;
