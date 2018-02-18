@@ -1,6 +1,6 @@
 <?php
 
-namespace Symple\mvc;
+namespace Symple\route;
 
 class Route
 {
